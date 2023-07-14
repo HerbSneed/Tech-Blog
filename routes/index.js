@@ -1,10 +1,10 @@
 const router = require('express').Router();
-const path = require('path');
+const pageroutes = require('./page');
+const apiRoutes = require('./api');
 
-router.use('/', pageRoutes);
+
+router.use('/', pageroutes);
 router.use('/api', apiRoutes);
-router.use('/movie', forumRoutes);
-
 
 
 module.exports = router;

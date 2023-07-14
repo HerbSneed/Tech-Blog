@@ -1,0 +1,20 @@
+[
+   {
+      "post_id": 1,
+      "title": "Python",
+      "description": "I enjoyed using Python so much more than C++.  It was a lot easier to understand",
+      "user_id": 1
+   },
+   {
+      "post_id": 2,
+      "title": "C++",
+      "description": "I prefer using Python more than C++.  I could accomplish more with less code.",
+      "user_id": 2
+   },
+   {
+      "post_id": 3,
+      "title": "My first App",
+      "description": "I enjoyed using the MVC method to build my first app. Once I got a grasp on the routing it was very intuitive.",
+      "user_id": 3
+   }
+]
