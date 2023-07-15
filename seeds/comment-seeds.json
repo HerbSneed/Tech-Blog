@@ -1,0 +1,17 @@
+[
+   {
+      "post_id": 1,
+      "description": "I totally agree, I think Javascript is the best language to learn first.  It's easy to learn and you can do so much with it.  I'm currently learning React and it's been a lot of fun.  I'm looking forward to learning more about it.",
+      "user_id": 2
+   },
+   {
+      "post_id": 2,
+      "description": "You should try Ruby on Rails.  It's a great framework for building web apps.  I'm currently learning it and I'm really enjoying it.  I'm looking forward to learning more about it.",
+      "user_id": 3
+   },
+   {
+      "post_id": 3,
+      "description": "I enjoyed using the MVC method to build my first app. Once I got a grasp on the routing it was very intuitive.",
+      "user_id": 1
+   }
+]

@@ -1,35 +1,38 @@
-const Post = require('../models/post');
-const User = require('../models/user');
+const {User, Post} = require('../models');
+const sequelize = require('../config/connection');
 
 module.exports = {
   getHomePage: async (req, res) => {
   try{
    const postData = await Post.findAll({
-      attributes: {include: ['title', 'description']},
+      include: [User]
    });
-
-
-
-   const userData = await User.findAll({
-      attributes: {include: ['username']},
-  });
-
+   
    const posts = postData.map((post) => post.get({
       plain: true}))
-   
-   const users = userData.map((user) => user.get({
-      plain: true}))  
 
-         console.log(posts, users);
+   console.log(posts);
 
-   return res.render('homepage', {posts, users});
-
-
+   res.render('homepage', {posts});
    } catch (err) {
       res.status(500).json(err);
    }
 }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //   try{
 //    const postData = await Post.findAll({

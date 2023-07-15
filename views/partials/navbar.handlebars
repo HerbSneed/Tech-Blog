@@ -1,11 +1,21 @@
     <nav class="w-full h-36 px-10 py-3 bg-emerald-700">
       <div class="flex text-green-100 justify-start gap-10 ">
+
+  {{#if loggedIn}}
+        <a href='/'>Home</a>
+        <a href="/dashboard">Dashboard</a>
+        <a id="logout" href='/login'>Logout</a>
+
+  {{else}}
         <a href='/'>Home</a>
         <a href="/dashboard">Dashboard</a>
         <a href='/login'>Login</a>
       </div>
+  {{/if}}
       <div class="w-52 py-2 mt-5 bg-green-100 rounded-xl shadow-xl ">
         <h1 class="text-center text-emerald-700 font-bold text-2xl">The Tech Blog</h1>
       </div>
+
     </nav>
+
 

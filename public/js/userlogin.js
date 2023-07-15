@@ -1,22 +1,33 @@
 async function newPostHandler(event) {
   event.preventDefault();
-  const title = document.querySelector('#title').value;
-  const description = document.querySelector('#description').value;
-  const response = await fetch(`/api/post`, {
-    method: 'POST',
-    body: JSON.stringify({
-      title,
-      description
-    }),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-  if (response.ok) {
-    document.location.replace('/dashboard');
-  } else {
-    alert('Failed update content');
-  }
-}
+  const username = document.querySelector('#username').value.trim();
+  const password = document.querySelector('#password').value.trim();
 
-document.querySelector('.newPost').addEventListener('submit', newPostHandler);
+  if (username && password) {
+    const response = await fetch('/api/user', {
+      method: 'POST',
+      body: JSON.stringify({
+        username,
+        password
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+
+    if (response.ok) {
+      document.location.replace('/dashboard');
+    } else {
+      const {
+        message
+      } = await response.json();
+      showAlert({
+        target: 'login-alert',
+        message,
+        type: 'danger'
+      });
+    }
+  }
+};
+
+document.querySelector('#login').addEventListener('click', newPostHandler);

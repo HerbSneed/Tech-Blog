@@ -24,4 +24,4 @@ async function newSignupHandler(event) {
 
 
 
-document.querySelector('.signup').addEventListener('submit', newSignupHandler);
+document.querySelector('#newUserSubmit').addEventListener('click', newSignupHandler);
