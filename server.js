@@ -1,19 +1,19 @@
 const express = require('express');
+const session = require('express-session');
 const exphbs = require('express-handlebars');
 const path = require('path');
-const hbs = exphbs.create({});
+const helpers = require('./utils/helpers');
+const hbs = exphbs.create({helpers});
 const sequelize = require('./config/connection')
 const app = express();
-const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-
 const routes = require('./routes');
-
 const PORT = process.env.PORT || 3001;
+
+
 
 const sessionConfig = {
   secret: process.env.SESSION_SECRET,
-  cookie: {},
   resave: false,
   saveUninitialized: true,
   store: new SequelizeStore({
@@ -21,20 +21,16 @@ const sessionConfig = {
   }),
 };
 
-app.engine('hbs', hbs.engine);
-app.set('view engine', 'hbs');
-
 app.use(session(sessionConfig));
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
+
+
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-
 app.use(routes);
-// app.use(require('./controllers/'));
-
-
 
 const force = process.env.FORCE_SYNC === 'true';
 

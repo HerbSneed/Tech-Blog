@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const SignupController = require('../../controllers/SignupController');
+const UserController = require('../../controllers/UserController');
 
-router.get('/', SignupController.getSignupPage);
+router.get('/', UserController.getSignupPage);
 
 module.exports = router;

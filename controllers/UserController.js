@@ -1,7 +1,15 @@
-const {User} = require('../models');
+const router = require('express').Router();
+const User = require('../models/User');
 
 
 module.exports = {
+   getSignupPage: async (req, res) => {
+   res.render('signup');
+   },
+   getLoginPage: async (req, res) => {
+   res.render('login');
+   }, 
+
 // CREATE new user
   register: async (req, res) => {
     const {
@@ -16,13 +24,12 @@ module.exports = {
       delete user.password;
 
       req.session.save(() => {
-        req.session.userId = user.id;
-        req.session.username = user.username;
         req.session.loggedIn = true;
+
         res.status(200).json(user);
       });
     } catch (err) {
-      console.error(err);
+      console.log(err);
       res.status(500).json(err);
     }
   },
@@ -39,22 +46,14 @@ module.exports = {
       const user = await User.findOne({
         where: {
           username,
+          password,
         },
         attributes: {
           exclude: ['createdAt, updatedAt']
         },
       });
-
+    console.log(user);
       if (!user) {
-        res.status(400).json({
-          message: 'Incorrect username or password. Please try again!',
-        });
-        return;
-      }
-
-      const validPassword = await user.checkPassword(password);
-
-      if (!validPassword) {
         res.status(400).json({
           message: 'Incorrect username or password. Please try again!',
         });
@@ -64,18 +63,26 @@ module.exports = {
       delete user.password;
 
       req.session.save(() => {
-        req.session.userId = user.id;
-        req.session.username = user.username;
-        req.session.loggedIn = true;
-        res.status(200).json({
-          user,
-          message: 'You are now logged in!',
-        });
-      });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json(err);
-    }
+      req.session.loggedIn = true;
+      req.session.username = username;
+
+
+
+
+
+
+
+
+
+      
+
+      res.status(200)
+        .json({ user: username, message: 'You are now logged in!' });
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
   },
 
 // LOGOUT user
@@ -89,3 +96,4 @@ module.exports = {
     }
   },
 };
+

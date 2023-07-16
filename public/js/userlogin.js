@@ -4,7 +4,7 @@ async function newPostHandler(event) {
   const password = document.querySelector('#password').value.trim();
 
   if (username && password) {
-    const response = await fetch('/api/user', {
+    const response = await fetch('/api/login', {
       method: 'POST',
       body: JSON.stringify({
         username,
@@ -18,16 +18,10 @@ async function newPostHandler(event) {
     if (response.ok) {
       document.location.replace('/dashboard');
     } else {
-      const {
-        message
-      } = await response.json();
-      showAlert({
-        target: 'login-alert',
-        message,
-        type: 'danger'
-      });
+      alert(response.statusText);
+      console.log(response.statusText);
     }
   }
-};
+}
 
 document.querySelector('#login').addEventListener('click', newPostHandler);
