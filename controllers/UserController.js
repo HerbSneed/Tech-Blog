@@ -1,19 +1,17 @@
-const router = require('express').Router();
 const User = require('../models/User');
 
-
 module.exports = {
-   getSignupPage: async (req, res) => {
-   res.render('signup');
-   },
-   getLoginPage: async (req, res) => {
-   res.render('login');
-   }, 
+  getSignupPage: async (req, res) => {
+    res.render('signup');
+  },
+  getLoginPage: async (req, res) => {
+    res.render('login');
+  },
 
-// CREATE new user
+  // CREATE new user
   register: async (req, res) => {
     const {
-        body: {
+      body: {
         username,
         password
       },
@@ -25,7 +23,6 @@ module.exports = {
 
       req.session.save(() => {
         req.session.loggedIn = true;
-
         res.status(200).json(user);
       });
     } catch (err) {
@@ -34,7 +31,7 @@ module.exports = {
     }
   },
 
-// LOGIN user
+  // LOGIN user
   login: async (req, res) => {
     const {
       body: {
@@ -52,7 +49,6 @@ module.exports = {
           exclude: ['createdAt, updatedAt']
         },
       });
-    console.log(user);
       if (!user) {
         res.status(400).json({
           message: 'Incorrect username or password. Please try again!',
@@ -60,32 +56,18 @@ module.exports = {
         return;
       }
 
-      delete user.password;
-
       req.session.save(() => {
-      req.session.loggedIn = true;
-      req.session.username = username;
-
-
-
-
-
-
-
-
-
-      
-
-      res.status(200)
-        .json({ user: username, message: 'You are now logged in!' });
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
+        req.session.loggedIn = true;
+        req.session.username = username;
+        res.status(200).json({ user: username, message: 'You are now logged in!' });
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
   },
 
-// LOGOUT user
+  // LOGOUT user
   logout: (req, res) => {
     if (req.session.loggedIn) {
       req.session.destroy(() => {

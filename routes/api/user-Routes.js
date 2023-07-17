@@ -1,13 +1,11 @@
 const router = require('express').Router();
-const userController = require('../../controllers/userController');
+const userController = require('../../controllers/UserController');
 
+router.get('/login', userController.login);
+router.get('/logout', userController.logout);
+router.get('/register', userController.register);
+router.post('/register', userController.register);
 
-
-router.get('/', userController.login);
-
-router.post('/', userController.login);
-
-router.get('/', userController.logout);
 
 
 

@@ -17,9 +17,9 @@ async function newPostHandler(event) {
 
     if (response.ok) {
       document.location.replace('/dashboard');
-    } else {
-      alert(response.statusText);
-      console.log(response.statusText);
+  } else {
+    alert(response.statusText);
+    console.log('error in JS file');
     }
   }
 }
