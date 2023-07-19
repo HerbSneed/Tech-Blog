@@ -8,7 +8,7 @@ module.exports = {
    });
    const posts = postData.map((post) => post.get({
       plain: true}))
-     res.render('homepage', {posts, loggedIn: req.session.loggedIn }
+     res.render('homepage', { loggedIn: req.session.loggedIn, posts}
      );
 
 

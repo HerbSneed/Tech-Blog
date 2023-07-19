@@ -1,6 +1,6 @@
-// const router = require('express').Router();
-// const PostController = require('../../controllers/PostController');
+const router = require('express').Router();
+const PostController = require('../../controllers/PostController');
 
-// router.post('/create-new-post', PostController.createPost);
+router.post('/', PostController.createPost);
 
-// module.exports = router;
+module.exports = router;

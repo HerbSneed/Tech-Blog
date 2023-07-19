@@ -14,11 +14,3 @@ router.use('/create-new-post', newPostRoutes);
 
 module.exports = router;
 
-
-
-
-  // homeRoutes,
-  // dashboardRoutes,
-  // loginRoutes,
-  // signupRoutes,
-  // newPostRoutes,

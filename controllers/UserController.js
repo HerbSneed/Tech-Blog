@@ -1,4 +1,6 @@
-const User = require('../models/User');
+const User = require('../models/user');
+const Post = require('../models/post');
+const Comment = require('../models/comment');
 
 module.exports = {
   getSignupPage: async (req, res) => {
@@ -25,6 +27,7 @@ module.exports = {
         req.session.loggedIn = true;
         res.status(200).json(user);
       });
+
     } catch (err) {
       console.log(err);
       res.status(500).json(err);
@@ -46,7 +49,8 @@ module.exports = {
           password,
         },
         attributes: {
-          exclude: ['createdAt, updatedAt']
+          exclude: ['createdAt', 'updatedAt'],
+          include: ['user_id']
         },
       });
       if (!user) {
@@ -56,11 +60,18 @@ module.exports = {
         return;
       }
 
-      req.session.save(() => {
-        req.session.loggedIn = true;
-        req.session.username = username;
-        res.status(200).json({ user: username, message: 'You are now logged in!' });
-      });
+      req.session.loggedIn = true;
+      req.session.username = user.username;
+      req.session.user_id = user.user_id; 
+
+      console.log(req.session.user_id);
+
+      await req.session.save(); 
+
+      res.status(200).json({ user: username,
+      user_id: req.session.user_id,
+      message: 'You are now logged in!' });
+
     } catch (err) {
       console.log(err);
       res.status(500).json(err);
@@ -71,7 +82,7 @@ module.exports = {
   logout: (req, res) => {
     if (req.session.loggedIn) {
       req.session.destroy(() => {
-        res.status(204).end();
+      res.status(204).end();
       });
     } else {
       res.status(404).end();

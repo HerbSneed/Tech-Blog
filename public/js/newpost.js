@@ -1,8 +1,10 @@
 async function newPostHandler(event) {
   event.preventDefault();
-  const title = document.querySelector('#title').value;
-  const description = document.querySelector('#description').value;
-  const response = await fetch(`/api/post`, {
+  const title = document.querySelector('#title').value.trim();
+  const description = document.querySelector('#description').value.trim();
+
+  if (title && description) {
+  const response = await fetch('/api/createPost', {
     method: 'POST',
     body: JSON.stringify({
       title,
@@ -12,11 +14,17 @@ async function newPostHandler(event) {
       'Content-Type': 'application/json'
     }
   });
+  console.log('>>>>Response>>>>>' + response);
+
   if (response.ok) {
-    document.location.replace('/dashboard');
+    const data = await response.text();
+    const dataJSON = JSON.parse(data);
+    console.log('>>>>>', dataJSON)
+    document.location.replace(`/dashboard/${dataJSON.user_id}`);
   } else {
     alert('Failed update content');
   }
 }
+}
 
-document.querySelector('#newPost').addEventListener('submit', newPostHandler);
+document.querySelector('#newPost').addEventListener('click', newPostHandler);

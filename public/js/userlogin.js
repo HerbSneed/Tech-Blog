@@ -1,4 +1,4 @@
-async function newPostHandler(event) {
+async function userLogin(event) {
   event.preventDefault();
   const username = document.querySelector('#username').value.trim();
   const password = document.querySelector('#password').value.trim();
@@ -16,7 +16,10 @@ async function newPostHandler(event) {
     });
 
     if (response.ok) {
-      document.location.replace('/dashboard');
+
+      const rest = await response.json();
+      console.log(rest.user_id); 
+      document.location.replace(`/dashboard/${rest.user_id}`);
   } else {
     alert(response.statusText);
     console.log('error in JS file');
@@ -24,4 +27,4 @@ async function newPostHandler(event) {
   }
 }
 
-document.querySelector('#login').addEventListener('click', newPostHandler);
+document.querySelector('#login').addEventListener('click', userLogin);
