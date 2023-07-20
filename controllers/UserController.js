@@ -64,7 +64,6 @@ module.exports = {
       req.session.username = user.username;
       req.session.user_id = user.user_id; 
 
-      console.log(req.session.user_id);
 
       await req.session.save(); 
 

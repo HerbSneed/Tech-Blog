@@ -3,7 +3,7 @@
     {{#if loggedIn}}  
       <div class="flex text-green-100 justify-start gap-10 ">
         <a href='/'>Home</a>
-        <a href="/dashboard">Dashboard</a>
+        <a id="dashboard" href='/dashboard/{{user_id}}'>Dashboard</a>
         <a id="logout" href='/login'>Logout</a>
       </div>
 

@@ -12,7 +12,6 @@ module.exports = {
 
   // CREATE new post
   createPost: async (req, res) => {
-    console.log(req);
     const {
       body: {
         title,
@@ -24,14 +23,29 @@ module.exports = {
       }
     } = req;
     try {
-      console.log('user_id from post controller' + user_id);
+
       const postData = await Post.create({
         title,
         description,
         user_id
       });
       res.status(200).json(postData);
-      console.log(postData);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+  getSinglePost: async (req, res) => {
+    try {
+      const postData = await Post.findByPk(req.params.post_id, {
+        include: [User]
+      });
+      const post = postData.get({ plain: true });
+
+      res.render('single-post', {
+        post,
+        loggedIn: req.session.loggedIn,
+        user_id: req.session.user_id,
+      })
     } catch (err) {
       res.status(500).json(err);
     }

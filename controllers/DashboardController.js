@@ -5,7 +5,10 @@ const Comment = require('../models/comment');
 
 module.exports = {
   getDashboardPage: async (req, res) => {
-    res.render('dashboard', { loggedIn: req.session.loggedIn });
+    res.render('dashboard', {
+      loggedIn: req.session.loggedIn,
+      user_id: req.session.user_id,
+     });
   },
   getUserDashboard: async (req, res) => {
     
@@ -23,10 +26,9 @@ module.exports = {
       }
 
       const userPosts = userData.posts.map((post) => post.get({ plain: true }));
-  
-      console.log(userPosts)
-      console.log(user_id);
       
+      console.log(userPosts);
+
       res.render('dashboard', { 
         userPosts,
         loggedIn: req.session.loggedIn,

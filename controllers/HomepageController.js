@@ -11,6 +11,8 @@ module.exports = {
      res.render('homepage', { loggedIn: req.session.loggedIn, posts}
      );
 
+     console.log(posts)
+
 
    } catch (err) {
       res.status(500).json(err);
