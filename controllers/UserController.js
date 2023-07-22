@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const Post = require('../models/post');
-const Comment = require('../models/comment');
 
 module.exports = {
   getSignupPage: async (req, res) => {
@@ -65,11 +64,13 @@ module.exports = {
       req.session.user_id = user.user_id; 
 
 
-      await req.session.save(); 
+      await req.session.save();
 
-      res.status(200).json({ user: username,
-      user_id: req.session.user_id,
-      message: 'You are now logged in!' });
+      res.status(200).json({
+        user: username,
+        user_id: req.session.user_id,
+        message: 'You are now logged in!'
+      });
 
     } catch (err) {
       console.log(err);
@@ -81,11 +82,10 @@ module.exports = {
   logout: (req, res) => {
     if (req.session.loggedIn) {
       req.session.destroy(() => {
-      res.status(204).end();
+        res.status(204).end();
       });
     } else {
       res.status(404).end();
     }
   },
 };
-

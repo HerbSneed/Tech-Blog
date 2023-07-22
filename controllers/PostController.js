@@ -4,10 +4,10 @@ const Comment = require('../models/comment');
 
 module.exports = {
   getNewPostPage: async (req, res) => {
-    res.render('create-new-post', { 
+    res.render('create-new-post', {
       loggedIn: req.session.loggedIn,
       user_id: req.session.user_id
-     });
+    });
   },
 
   // CREATE new post
@@ -16,7 +16,6 @@ module.exports = {
       body: {
         title,
         description,
-        // user_id,
       },
       session: {
         user_id
@@ -37,11 +36,11 @@ module.exports = {
   getSinglePost: async (req, res) => {
     try {
       const postData = await Post.findByPk(req.params.post_id, {
-        include: [User]
+        include: [User, Comment]
       });
       const post = postData.get({ plain: true });
 
-      res.render('single-post', {
+      res.render('single-post-form', {
         post,
         loggedIn: req.session.loggedIn,
         user_id: req.session.user_id,

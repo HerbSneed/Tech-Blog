@@ -12,8 +12,9 @@ router.use('/dashboard', dashboardRoutes);
 router.use('/login', loginRoutes);
 router.use('/signup', signupRoutes);
 router.use('/create-new-post', newPostRoutes);
-router.use('/new-comment', commentRoutes);
+router.use('/get-comment', commentRoutes);
 router.use('/get-single-post', singlePostRoutes);
+
 
 
 module.exports = router;

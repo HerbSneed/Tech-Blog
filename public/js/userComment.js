@@ -1,29 +1,29 @@
 async function userComment(event) {
   event.preventDefault();
-  // const username = document.querySelector('#username').value.trim();
   const description = document.querySelector('#comment').value.trim();
+  const url = window.location.toString().split('/');
+  console.log(url);
+  const post_id = url[url.length - 1];
+  console.log(post_id);
 
   if (description) {
     const response = await fetch('/api/createComment', {
       method: 'POST',
       body: JSON.stringify({
         description,
+        post_id
       }),
       headers: {
         'Content-Type': 'application/json'
       },
     });
 
-    console.log('>>>>response>>>>>' + response);
-
     if (response.ok) {
       const data = await response.text();
       const dataJSON = JSON.parse(data);
-      console.log('>>>>>', dataJSON)
-      document.location.replace(`/dashboard/${dataJSON.user_id}`);
 
-      const rest = await response.json();
-      document.location.replace(`/single-post/${rest.user_id}`);
+      document.location.replace('/get-single-post/1');
+
     } else {
       alert(response.statusText);
       console.log('error in JS file');

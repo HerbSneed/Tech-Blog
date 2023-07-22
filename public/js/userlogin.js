@@ -14,11 +14,11 @@ async function userLogin(event) {
         'Content-Type': 'application/json'
       },
     });
-
+console.log(response);
     if (response.ok) {
 
       const rest = await response.json();
-      console.log(rest.user_id); 
+      console.log(rest);
       document.location.replace(`/dashboard/${rest.user_id}`);
   } else {
     alert(response.statusText);
