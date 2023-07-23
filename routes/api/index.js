@@ -15,6 +15,6 @@ router.use('/logout', isAuthenticated, UserController.logout);
 router.use('/createPost', PostController.createPost);
 router.use('/singlePost', PostController.getSinglePost);
 router.use('/createComment', CommentController.createComment);
-router.use('/comments', CommentController.getComment);
+// router.use('/comments', CommentController.getComment);
 
 module.exports = router;

@@ -2,9 +2,7 @@ async function userComment(event) {
   event.preventDefault();
   const description = document.querySelector('#comment').value.trim();
   const url = window.location.toString().split('/');
-  console.log(url);
   const post_id = url[url.length - 1];
-  console.log(post_id);
 
   if (description) {
     const response = await fetch('/api/createComment', {
@@ -22,7 +20,7 @@ async function userComment(event) {
       const data = await response.text();
       const dataJSON = JSON.parse(data);
 
-      document.location.replace('/get-single-post/1');
+      document.location.replace(`/get-single-post/${dataJSON.post_id}/comments`);
 
     } else {
       alert(response.statusText);

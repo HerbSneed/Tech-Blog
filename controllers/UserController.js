@@ -60,14 +60,10 @@ module.exports = {
       }
 
       req.session.loggedIn = true;
-      req.session.username = user.username;
       req.session.user_id = user.user_id; 
-
-
       await req.session.save();
 
       res.status(200).json({
-        user: username,
         user_id: req.session.user_id,
         message: 'You are now logged in!'
       });

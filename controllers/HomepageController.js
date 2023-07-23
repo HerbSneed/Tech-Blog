@@ -15,6 +15,7 @@ module.exports = {
       user_id: req.session.user_id,
       posts}
      );
+     console.log(posts)
    } catch (err) {
       res.status(500).json(err);
    }
