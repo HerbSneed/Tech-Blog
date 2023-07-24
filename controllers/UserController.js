@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Post = require('../models/post');
+const bcrypt = require('bcrypt');
 
 module.exports = {
   getSignupPage: async (req, res) => {
@@ -8,7 +9,6 @@ module.exports = {
   getLoginPage: async (req, res) => {
     res.render('login');
   },
-
   // CREATE new user
   register: async (req, res) => {
     const {
@@ -24,15 +24,14 @@ module.exports = {
 
       req.session.save(() => {
         req.session.loggedIn = true;
+        req.session.username = user.username;
         res.status(200).json(user);
       });
-
     } catch (err) {
       console.log(err);
       res.status(500).json(err);
     }
   },
-
   // LOGIN user
   login: async (req, res) => {
     const {
@@ -42,38 +41,31 @@ module.exports = {
       },
     } = req;
     try {
-      const user = await User.findOne({
-        where: {
-          username,
-          password,
-        },
-        attributes: {
-          exclude: ['createdAt', 'updatedAt'],
-          include: ['user_id']
-        },
-      });
+      const { username, password } = req.body;
+      const user = await User.findOne({ where: { username } });
       if (!user) {
-        res.status(400).json({
-          message: 'Incorrect username or password. Please try again!',
-        });
-        return;
+        return res.status(401).json({ message: 'Invalid credentials' });
       }
-
+      const passwordMatch = await bcrypt.compare(password, user.password);
+      if (!passwordMatch) {
+        return res.status(401).json({ message: 'Invalid credentials' });
+      }
       req.session.loggedIn = true;
+      req.session.username = user.username;
       req.session.user_id = user.user_id; 
       await req.session.save();
 
       res.status(200).json({
+        user: username,
         user_id: req.session.user_id,
+        loggedIn: req.session.loggedIn,
         message: 'You are now logged in!'
       });
-
     } catch (err) {
       console.log(err);
       res.status(500).json(err);
     }
   },
-
   // LOGOUT user
   logout: (req, res) => {
     if (req.session.loggedIn) {

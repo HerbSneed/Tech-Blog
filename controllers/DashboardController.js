@@ -16,7 +16,6 @@ module.exports = {
       const userData = await User.findByPk(req.params.user_id, {
         include: [Post]
       });
-      console.log(userData);
       
       if (!userData) {
         res.status(500).json({ message: 'No user found with this id!' });
@@ -24,6 +23,7 @@ module.exports = {
       }
 
       const userPosts = userData.posts.map((post) => post.get({ plain: true }));
+      console.log(userPosts)
 
       res.render('dashboard', { 
         userPosts,
