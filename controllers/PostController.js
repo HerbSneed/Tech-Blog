@@ -9,7 +9,8 @@ module.exports = {
       user_id: req.session.user_id
     });
   },
-  // CREATE new post
+
+//CREATE POST
   createPost: async (req, res) => {
     const {
       body: {
@@ -21,7 +22,6 @@ module.exports = {
       }
     } = req;
     try {
-
       const postData = await Post.create({
         title,
         description,
@@ -32,13 +32,13 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+//GET SINGLE POST
   getSinglePost: async (req, res) => {
     try {
       const postData = await Post.findByPk(req.params.post_id, {
         include: [User, Comment]
       });
       const posts = postData.get({ plain: true });
-
       res.render('single-post-form', {
         posts,
         loggedIn: req.session.loggedIn,
@@ -49,20 +49,18 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+// GET SINGLE POST AND COMMENT
   getSinglePostComment: async (req, res) => {
     try {
-
       const postData = await Post.findByPk(req.params.post_id, {
         include: [User]
       });
       const posts = postData.get({ plain: true });
-
       const commentData = await Comment.findAll({
         where: {post_id: req.params.post_id},
         include: [User, Post]
       });
       const comments = commentData.map((comment) => comment.get({ plain: true }));
-
       res.render('single-post-no-form', {
         posts,
         comments,
@@ -70,18 +68,18 @@ module.exports = {
         loggedIn: req.session.loggedIn,
         user_id: req.session.user_id,
       })
-
     } catch (err) {
       res.status(500).json(err);
     }
   },
+
+// GET SINGLE POST PAGE FOR EDIT DELETE
   getSinglePostDeleteUpdate: async (req, res) => {
     try {
       const postData = await Post.findByPk(req.params.post_id, {
         include: [User]
       });
       const posts = postData.get({ plain: true });
-
       res.render('single-post-delete-update', {
         posts,
         username: req.session.username,
@@ -89,11 +87,12 @@ module.exports = {
         user_id: req.session.user_id,
       })
       console.log(posts);
-
     } catch (err) {
       res.status(500).json(err);
     }
   },
+
+// UPDATE A SINGLE POST
   updateSinglePost: async (req, res) => {
     const {
       body: {
@@ -117,11 +116,9 @@ module.exports = {
         },
       }
       );
-
       if (!postData) {
         return res.status(404).json({ error: 'Post not found.' });
       }
-
       res.status(200).json(postData);
       console.log('>>>>>> Post Data' + postData)
     } catch (err) {
@@ -129,6 +126,8 @@ module.exports = {
       res.status(500).json({ error: 'Something went wrong.' });
     }
   },
+
+//DELETE A SINGLE POST
   deleteSinglePost: async (req, res) => {
     try {
       const postDelete = await Post.destroy(
@@ -140,7 +139,6 @@ module.exports = {
       );
       console.log(req.params)
       res.json(postDelete)
-
     } catch (err) {
       res.status(500).json(err);
     }

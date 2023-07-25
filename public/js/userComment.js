@@ -19,9 +19,7 @@ async function userComment(event) {
     if (response.ok) {
       const data = await response.text();
       const dataJSON = JSON.parse(data);
-
       document.location.replace(`/get-single-post/${dataJSON.post_id}/comments`);
-
     } else {
       alert(response.statusText);
       console.log('error in JS file');

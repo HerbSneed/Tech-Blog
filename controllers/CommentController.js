@@ -23,7 +23,6 @@ module.exports = {
         post_id,
         username,
       })
-    
       console.log(commentData);
       res.status(200).json(commentData);
     } catch (err) {

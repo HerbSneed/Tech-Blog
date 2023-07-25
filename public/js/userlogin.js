@@ -15,7 +15,6 @@ async function userLogin(event) {
       },
     });
     if (response.ok) {
-
       const rest = await response.json();
       document.location.replace(`/dashboard/${rest.user_id}`);
   } else {
