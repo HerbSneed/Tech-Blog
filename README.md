@@ -60,4 +60,5 @@ Github
 https://github.com/HerbSneed/Tech-Blog
 
 Heroku
+https://the-tech-blog-hs-55f52279bd44.herokuapp.com/
 
