@@ -3,9 +3,9 @@ const PostController = require('../../controllers/PostController');
 const UserController = require('../../controllers/UserController');
 const CommentController = require('../../controllers/CommentController');
 const isAuthenticated = require('../../middleware/isAuthenticated');
-const userRoutes = require('./user-routes');
-const getSinglePost = require('./../page/single-post-routes');
-const commentRoutes = require('./comment-routes');
+// const userRoutes = require('./user-routes');
+// const getSinglePost = require('./../page/single-post-routes');
+// const commentRoutes = require('./comment-routes');
 const postRoutes = require('./post-routes')
 
 
